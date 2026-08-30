@@ -1,0 +1,43 @@
+{% extends "admin/base.html" %}
+{% block title %}معرض الصور{% endblock %}
+{% block content %}
+<h2>معرض الصور</h2>
+
+<div class="card">
+  <h3>رفع صورة جديدة</h3>
+  <form method="POST" action="{{ url_for('admin.gallery_upload') }}" enctype="multipart/form-data">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="form-row">
+      <label for="image">الصورة (png, jpg, jpeg, webp)</label>
+      <input type="file" id="image" name="image" accept="image/png,image/jpeg,image/webp" required>
+    </div>
+    <div class="form-row">
+      <label for="caption">وصف الصورة (اختياري)</label>
+      <input type="text" id="caption" name="caption">
+    </div>
+    <button type="submit" class="btn btn-primary">رفع الصورة</button>
+  </form>
+</div>
+
+<div class="card">
+  {% if images %}
+  <div class="gallery-grid">
+    {% for img in images %}
+    <figure>
+      <img src="{{ url_for('static', filename='uploads/' ~ img.filename) }}" alt="{{ img.caption }}">
+      <figcaption>
+        {{ img.caption or 'بدون وصف' }}
+        <form method="POST" action="{{ url_for('admin.gallery_delete', image_id=img.id) }}"
+              onsubmit="return confirm('حذف هذه الصورة؟');" style="margin-top:.4rem;">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button type="submit" class="btn btn-danger btn-sm" style="width:100%;">حذف</button>
+        </form>
+      </figcaption>
+    </figure>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="empty">لا توجد صور بعد. ابدأ برفع أول صورة للمعرض.</p>
+  {% endif %}
+</div>
+{% endblock %}

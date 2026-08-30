@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}لوحة التحكم{% endblock %} - منتجع رُومة</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body>
+  {% if current_user.is_authenticated %}
+  <div class="admin-topbar">
+    <div class="brand">منتجع <span>رُومة</span> · لوحة التحكم</div>
+    <nav class="admin-nav">
+      <a href="{{ url_for('admin.dashboard') }}" class="{{ 'active' if request.endpoint == 'admin.dashboard' }}">الرئيسية</a>
+      <a href="{{ url_for('admin.bookings') }}" class="{{ 'active' if request.endpoint in ['admin.bookings','admin.booking_detail'] }}">الحجوزات</a>
+      <a href="{{ url_for('admin.settings') }}" class="{{ 'active' if request.endpoint == 'admin.settings' }}">الأسعار والمعلومات</a>
+      <a href="{{ url_for('admin.gallery') }}" class="{{ 'active' if request.endpoint == 'admin.gallery' }}">معرض الصور</a>
+      <a href="{{ url_for('admin.logout') }}">تسجيل الخروج</a>
+    </nav>
+  </div>
+  {% endif %}
+
+  <div class="admin-container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>

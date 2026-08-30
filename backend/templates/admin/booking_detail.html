@@ -1,0 +1,43 @@
+{% extends "admin/base.html" %}
+{% block title %}تفاصيل الحجز{% endblock %}
+{% block content %}
+<p><a href="{{ url_for('admin.bookings') }}" class="btn btn-outline btn-sm">&rarr; رجوع إلى الحجوزات</a></p>
+
+<div class="card">
+  <h2>حجز رقم {{ booking.booking_id }} <span class="badge badge-{{ booking.status }}">{{ booking.status_label }}</span></h2>
+  <table>
+    <tr><th>الاسم الكامل</th><td>{{ booking.full_name }}</td></tr>
+    <tr><th>رقم الهاتف</th><td>{{ booking.phone }}</td></tr>
+    <tr><th>تاريخ الحجز</th><td>{{ booking.booking_date }}</td></tr>
+    <tr><th>نوع الشفت</th><td>{{ booking.shift_label }}</td></tr>
+    <tr><th>عدد الأشخاص</th><td>{{ booking.guests_count }}</td></tr>
+    <tr><th>ملاحظات</th><td>{{ booking.notes or '-' }}</td></tr>
+    <tr><th>تاريخ الإرسال</th><td>{{ booking.created_at.strftime('%Y-%m-%d %H:%M') }}</td></tr>
+  </table>
+</div>
+
+<div class="card">
+  <h3>تغيير الحالة</h3>
+  <form method="POST" action="{{ url_for('admin.update_booking_status', booking_id=booking.id) }}"
+        style="display:flex; gap:.6rem; flex-wrap:wrap; align-items:end;">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="form-row" style="min-width:220px; margin-bottom:0;">
+      <select name="status">
+        {% for key, label in statuses.items() %}
+        <option value="{{ key }}" {{ 'selected' if booking.status == key }}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">حفظ الحالة</button>
+  </form>
+</div>
+
+<div class="card">
+  <h3>منطقة الخطر</h3>
+  <form method="POST" action="{{ url_for('admin.delete_booking', booking_id=booking.id) }}"
+        onsubmit="return confirm('هل أنت متأكد من حذف هذا الحجز نهائياً؟');">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button type="submit" class="btn btn-danger">حذف الحجز</button>
+  </form>
+</div>
+{% endblock %}

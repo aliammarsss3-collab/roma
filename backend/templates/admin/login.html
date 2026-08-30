@@ -1,0 +1,22 @@
+{% extends "admin/base.html" %}
+{% block title %}تسجيل الدخول{% endblock %}
+{% block content %}
+<div class="login-wrap">
+  <div class="card login-card">
+    <h1>منتجع رُومة</h1>
+    <p class="sub">تسجيل الدخول إلى لوحة التحكم</p>
+    <form method="POST">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div class="form-row" style="text-align: right;">
+        <label for="username">اسم المستخدم</label>
+        <input type="text" id="username" name="username" required autofocus>
+      </div>
+      <div class="form-row" style="text-align: right;">
+        <label for="password">كلمة المرور</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;">دخول</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

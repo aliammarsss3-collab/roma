@@ -1,0 +1,43 @@
+{% extends "admin/base.html" %}
+{% block title %}الحجوزات{% endblock %}
+{% block content %}
+<h2>إدارة الحجوزات</h2>
+
+<form class="filters" method="GET">
+  <input type="text" name="q" placeholder="بحث بالاسم أو الهاتف أو رقم الحجز" value="{{ q }}">
+  <select name="status">
+    <option value="">كل الحالات</option>
+    {% for key, label in statuses.items() %}
+    <option value="{{ key }}" {{ 'selected' if status == key }}>{{ label }}</option>
+    {% endfor %}
+  </select>
+  <button type="submit" class="btn btn-primary btn-sm">تصفية</button>
+  <a href="{{ url_for('admin.bookings') }}" class="btn btn-outline btn-sm">إعادة تعيين</a>
+</form>
+
+<div class="card">
+  {% if bookings %}
+  <table>
+    <thead>
+      <tr><th>رقم الحجز</th><th>الاسم</th><th>الهاتف</th><th>التاريخ</th><th>الشفت</th><th>الأشخاص</th><th>الحالة</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for b in bookings %}
+      <tr>
+        <td>{{ b.booking_id }}</td>
+        <td>{{ b.full_name }}</td>
+        <td>{{ b.phone }}</td>
+        <td>{{ b.booking_date }}</td>
+        <td>{{ b.shift_label }}</td>
+        <td>{{ b.guests_count }}</td>
+        <td><span class="badge badge-{{ b.status }}">{{ b.status_label }}</span></td>
+        <td><a class="btn btn-outline btn-sm" href="{{ url_for('admin.booking_detail', booking_id=b.id) }}">التفاصيل</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="empty">لا توجد نتائج مطابقة.</p>
+  {% endif %}
+</div>
+{% endblock %}

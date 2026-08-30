@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://YOUR-USERNAME.github.io/ruma-resort/sitemap.xml

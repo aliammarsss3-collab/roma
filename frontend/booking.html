@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الحجز | منتجع رُومة</title>
+<meta name="description" content="احجزوا شفتكم الصباحي أو المسائي في منتجع رُومة عبر نموذج حجز إلكتروني بسيط وسريع.">
+<meta name="robots" content="index, follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header scrolled">
+  <div class="container nav-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">ر</span>
+      <span class="brand-name">منتجع رُومة</span>
+    </a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">الرئيسية</a></li>
+        <li><a href="index.html#about">عن المنتجع</a></li>
+        <li><a href="index.html#prices">الأسعار</a></li>
+        <li><a href="index.html#services">الخدمات</a></li>
+        <li><a href="index.html#gallery">معرض الصور</a></li>
+        <li><a href="booking.html" class="active">الحجز</a></li>
+        <li><a href="contact.html">تواصل معنا</a></li>
+      </ul>
+    </nav>
+    <div class="nav-cta">
+      <button class="nav-toggle" aria-label="القائمة">☰</button>
+    </div>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="container">
+    <div class="eyebrow">الحجز</div>
+    <h1>احجزوا وقتكم في منتجع رُومة</h1>
+    <p style="color:rgba(255,255,255,.8); max-width:520px; margin:0 auto;">
+      عبّئوا النموذج أدناه وسنتواصل معكم لتأكيد الحجز. طلب الحجز لا يُعتبر مؤكداً إلا بعد تواصل فريقنا معكم.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="form-card reveal" style="max-width:760px; margin:0 auto;">
+      <div class="alert"></div>
+
+      <form id="booking-form" novalidate>
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="full_name">الاسم الكامل</label>
+            <input type="text" id="full_name" name="full_name" required maxlength="120">
+            <div class="field-error" data-error-for="full_name"></div>
+          </div>
+          <div class="form-field">
+            <label for="phone">رقم الهاتف</label>
+            <input type="tel" id="phone" name="phone" required maxlength="30" placeholder="07xxxxxxxxx">
+            <div class="field-error" data-error-for="phone"></div>
+          </div>
+          <div class="form-field">
+            <label for="booking_date">تاريخ الحجز</label>
+            <input type="date" id="booking_date" name="booking_date" required>
+            <div class="field-error" data-error-for="booking_date"></div>
+          </div>
+          <div class="form-field">
+            <label for="shift">نوع الشفت</label>
+            <select id="shift" name="shift" required>
+              <option value="">اختر الشفت</option>
+              <option value="morning">الشفت الصباحي (10ص - 6م)</option>
+              <option value="evening">الشفت المسائي (8م - 8ص)</option>
+            </select>
+            <div class="field-error" data-error-for="shift"></div>
+          </div>
+          <div class="form-field">
+            <label for="guests_count">عدد الأشخاص</label>
+            <input type="number" id="guests_count" name="guests_count" min="1" max="100" value="1" required>
+            <div class="field-error" data-error-for="guests_count"></div>
+          </div>
+        </div>
+
+        <div class="form-field full">
+          <label for="notes">ملاحظات إضافية (اختياري)</label>
+          <textarea id="notes" name="notes" maxlength="1000" placeholder="أي طلبات أو ملاحظات خاصة..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-gold btn-block">إرسال طلب الحجز</button>
+      </form>
+
+      <div id="booking-result" class="booking-id-box" hidden>
+        رقم حجزكم هو: <span data-booking-id></span><br>
+        <small>احتفظوا بهذا الرقم لمتابعة حالة الحجز.</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0;">
+  <div class="container status-check">
+    <div class="form-card reveal">
+      <h3 style="text-align:center;">التحقق من حالة الحجز</h3>
+      <form id="status-form" novalidate>
+        <div class="form-field">
+          <label for="booking_id">رقم الحجز</label>
+          <input type="text" id="booking_id" name="booking_id" required placeholder="RUMA-XXXXXX">
+        </div>
+        <div class="form-field">
+          <label for="status_phone">رقم الهاتف المستخدم عند الحجز</label>
+          <input type="tel" id="status_phone" name="phone" required>
+        </div>
+        <button type="submit" class="btn btn-green btn-block">تحقق من الحالة</button>
+      </form>
+      <div id="status-result" class="alert"></div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-bottom">
+    © <span data-year></span> منتجع رُومة. جميع الحقوق محفوظة.
+  </div>
+</footer>
+
+<script src="js/config.js"></script>
+<script>
+  // Pre-select shift from the URL, e.g. booking.html?shift=morning
+  document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    const shift = params.get("shift");
+    const select = document.getElementById("shift");
+    if (shift && select) select.value = shift;
+  });
+</script>
+<script src="js/main.js"></script>
+</body>
+</html>
